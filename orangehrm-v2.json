@@ -4,10 +4,11 @@
     "title": "OrangeHRM Open Source : REST API v2 docs",
     "version": "2.5.0",
     "x-logo": {
-      "url": "https://www.orangehrm.com/_resources/themes/orangehrm/dist/images/OrangeHRM_Logo.svg",
-      "href": "https://github.com/orangehrm/orangehrm"
+      "url": "https://www.orangehrm.com/assets/Uploads/OrangeHRM_Logo.svg",
+      "href": "https://github.com/orangehrm/orangehrm",
+      "backgroundColor": "#ffffff"
     },
-    "description": "This page contans documentation on how to use OrangeHRM via API calls.\n\n ## OrangHRM Starter Application \n\n ### Getting started\n* Download the latest version of OrangeHRM Starter [here](https://sourceforge.net/projects/orangehrm/files/latest/download)\n * Prerequisites and environment setup for installing\n\n > OrangeHRM is a comprehensive Human Resource Management (HRM) System that captures all the essential functionalities required for any enterprise. Copyright (C) 2006 OrangeHRM Inc., http://www.orangehrm.com/ \n>\n>OrangeHRM is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n>\n>OrangeHRM is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\n # Technincal Overview\n\nOrangeHRM open source API is a RESTful API that allows developers to access and manipulate the data and functionality of OrangeHRM open source software. The API follows the JSON format for requests and responses and uses the HTTP methods GET, POST, PUT, and DELETE for CRUD operations. The API supports authentication using OAuth 2.0 and has various endpoints for different resources, such as employees, leave types, attendance records, performance reviews, candidates, etc.",
+    "description": "This page contans documentation on how to use OrangeHRM via API calls.\n\n ## OrangeHRM Starter Application \n\n ### Getting started\n * Download the latest version of OrangeHRM Starter [here](https://sourceforge.net/projects/orangehrm/files/latest/download) \n\n # Authorization \n\n Include authorization documentation here \n\n # Technincal Overview \n\n Include technical overview here"
   },
   "servers": [
     {
@@ -17,44 +18,51 @@
           "default": "https://opensource-demo.orangehrmlive.com/index.php"
         }
       }
-    },
+    }
   ],
   "x-tagGroups": [
     {
       "name": "Admin",
-      "tags": ["Education", "Email Configuration"]
+      "tags": ["Education", "Email Configuration", "Email Subscription"]
     },
     {
       "name": "Buzz",
-      "tags": ["Comments", "Feed"]
+      "tags": ["Buzz Comments", "Buzz Feed"]
     }
   ],
   "tags": [
     {
       "name": "Education",
-      "description": "This endpoint allows administrators to perform CRUD (create, read, update, delete) operations on the education types that are available for employees to select from in their profiles. Education types are predefined categories that represent the level and field of education that an employee has attained, such as Bachelor of Science, Master of Business Administration, Doctor of Philosophy, etc. Each education type has a unique ID, a name, and a description."
+      "description": "This endpoint can only be used by **Admin** Users. It facilitates CRUD (create, read, update, delete) operations on Education types (e.g. - Bachelors, Masters) which can be selected by an employee (ESS) when updating their profile."
     },
     {
       "name": "Email Configuration",
-      "description": "This endpoint allows administrators to manage the email subscriptions that are available for employees to opt-in or opt-out from in their settings. Email subscriptions are predefined topics that determine the type and frequency of emails that an employee receives from the HRM system, such as newsletters, announcements, reminders, surveys, etc. Each email subscription has a unique ID, a name, a description, and a status (active or inactive)."
+      "description": "This endpoint can only be used by **Admin** Users. It facilitates read and update operations for configuring emails. By configuring the email, admins can sign up users for email subscriptions."
     },
     {
-      "name": "Comments",
-      "description": "This endpoint allows users to interact with the social media feature of the HRM system called Buzz. Buzz is a platform where users can share their thoughts, opinions, feedback, and achievements with other users in the organization. Users can also like, reply, and report other users' posts. Each post has a unique ID, a content, a timestamp, a user ID, and a list of comments. Each comment has a unique ID, a content, a timestamp, a user ID, and a list of replies."
+      "name": "Email Subscription",
+      "description": "This endpoint can only be used by **Admin** Users. It facilitates CRUD (create, read, update, delete) operations on email subscriptions. Admins can sign up users for email subscriptions so that they get notified for various events such as Leave Approval, Leave Rejection, etc."
+    },
+    {
+      "name": "Buzz Comments",
+      "description": "This endpoint can be used by all users. It facilitates CRUD (create, read, update, delete) operations for Buzz Comments."
     },
     {
       "name": "Feed",
-      "description": "This endpoint allows users to access the feed of the social media feature of the HRM system called Buzz. The feed is a personalized and dynamic stream of posts from other users in the organization that the user follows or is interested in. The feed also shows the user's own posts and the number of likes, comments, and reports they have received. The feed is updated in real-time and can be filtered by various criteria, such as date, popularity, relevance, etc."
+      "description": "This endpoint can be used by all users. It faciliates the read operation for the Buzz Feed"
     }
   ],
   "paths": {
+    "Test": {
+
+    },
     "/api/v2/admin/educations/{id}": {
       "get": {
         "tags": [
           "Education"
         ],
         "operationId": "85d2fb1521689313e1903de8a061a5c5",
-        "summary": "Get education by ID",
+        "summary": "List an education type",
         "parameters": [
           {
             "in": "path",
@@ -63,7 +71,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "Positive numerical integer"
+            "description": "Numerical ID of the education type"
           }
         ],
         "responses": {
@@ -95,7 +103,7 @@
           "Education"
         ],
         "operationId": "6769e5a43e5da9f99ec2b0af3c0cfcfe",
-        "summary": "Update education",
+        "summary": "Update an education type",
         "parameters": [
           {
             "in": "path",
@@ -103,7 +111,8 @@
             "name": "id",
             "schema": {
               "type": "integer"
-            }
+            },
+            "description": "Numerical ID of the education type"
           }
         ],
         "requestBody": {
@@ -116,7 +125,8 @@
                 "properties": {
                   "name": {
                     "type": "string"
-                  }
+                  },
+                  "description": "Name of the education type"
                 },
                 "type": "object"
               }
@@ -160,6 +170,7 @@
             "name": "sortField",
             "in": "query",
             "required": false,
+            "description": "Sort the collection by the education name",
             "schema": {
               "type": "string",
               "enum": [
@@ -193,7 +204,8 @@
                     "meta": {
                       "properties": {
                         "total": {
-                          "type": "integer"
+                          "type": "integer",
+                          "description": "The total amount of items in the collection"
                         }
                       },
                       "type": "object"
@@ -211,7 +223,7 @@
           "Education"
         ],
         "operationId": "c766cd3bf4c9fbc024211a9163b21fc2",
-        "summary": "Create education",
+        "summary": "Create an education type",
         "requestBody": {
           "content": {
             "application/json": {
@@ -254,7 +266,7 @@
         "tags": [
           "Education"
         ],
-        "summary": "Delete education",
+        "summary": "Delete an education type",
         "operationId": "6aa0615d708abfa41c03d8baff1e1444",
         "requestBody": {
           "$ref": "#/components/requestBodies/DeleteRequestBody"
@@ -272,6 +284,7 @@
           "Email Configuration"
         ],
         "operationId": "510d84c0525e60b623cd290f6def32c1",
+        "summary": "Retrieve email configuration",
         "responses": {
           "200": {
             "description": "Success",
@@ -301,6 +314,7 @@
           "Email Configuration"
         ],
         "operationId": "78e7a202917547d3a627fadc8190561c",
+        "summary": "Update email configuration",
         "requestBody": {
           "content": {
             "application/json": {
@@ -372,9 +386,10 @@
     "/api/v2/admin/email-subscriptions/{emailSubscriptionId}/subscribers": {
       "get": {
         "tags": [
-          "Email Configuration"
+          "Email Subscription"
         ],
         "operationId": "73565b0f61c6f9538a2a4d5871f26d7e",
+        "summary": "Retreive all email subscribers",
         "parameters": [
           {
             "in": "path",
@@ -440,9 +455,10 @@
       },
       "post": {
         "tags": [
-          "Email Configuration"
+          "Email Subscription"
         ],
         "operationId": "52b59990a3a4fa8f5a72bca80073330a",
+        "summary": "Create an email subscriber",
         "parameters": [
           {
             "in": "path",
@@ -497,9 +513,10 @@
       },
       "delete": {
         "tags": [
-          "Email Configuration"
+          "Email Subscription"
         ],
         "operationId": "df98edd6a567b57edc67ba695b6ce151",
+        "summary": "Delete an email subscriber",
         "parameters": [
           {
             "in": "path",
@@ -523,9 +540,10 @@
     "/api/v2/admin/email-subscriptions/{emailSubscriptionId}/subscribers/{id}": {
       "get": {
         "tags": [
-          "Email Configuration"
+          "Email Subscription"
         ],
         "operationId": "bc01f9130f327a4c22f0551aa0df5ec2",
+        "summary":  "Get an email subscriber",
         "parameters": [
           {
             "in": "path",
@@ -570,9 +588,10 @@
       },
       "put": {
         "tags": [
-          "Email Configuration"
+          "Email Subscription"
         ],
         "operationId": "dc15fa496254ffeef0b33f41203212fc",
+        "summary": "Update an email subscriber",
         "parameters": [
           {
             "in": "path",
@@ -640,7 +659,7 @@
     "/api/v2/admin/email-subscriptions": {
       "get": {
         "tags": [
-          "Email Configuration"
+          "Email Subscription"
         ],
         "operationId": "fadff6b98a2052ab9e62389162630c86",
         "parameters": [
@@ -698,7 +717,7 @@
     "/api/v2/admin/email-subscriptions/{id}": {
       "put": {
         "tags": [
-          "Email Configuration"
+          "Email Subscription"
         ],
         "operationId": "70c25099ae3c169d508e6c38bbb66f9d",
         "parameters": [
@@ -6013,7 +6032,7 @@
     "/api/v2/buzz/shares/{shareId}/comments/{commentId}": {
       "get": {
         "tags": [
-          "Comments"
+          "Buzz Comments"
         ],
         "operationId": "f2dffdcb7c087b0c53e6a63235585fee",
         "parameters": [
@@ -6077,7 +6096,7 @@
       },
       "put": {
         "tags": [
-          "Comments"
+          "Buzz Comments"
         ],
         "operationId": "6a4d7ed688c3f750b9e9ec2627f0bb8b",
         "parameters": [
@@ -6158,7 +6177,7 @@
       },
       "delete": {
         "tags": [
-          "Comments"
+          "Buzz Comments"
         ],
         "operationId": "5809765272f7ec06827f0e932793a08a",
         "parameters": [
@@ -6212,7 +6231,7 @@
     "/api/v2/buzz/shares/{shareId}/comments": {
       "get": {
         "tags": [
-          "Comments"
+          "Buzz Comments"
         ],
         "operationId": "d7c4134c2f8bcaafef681140ed75988b",
         "parameters": [
@@ -6296,7 +6315,7 @@
       },
       "post": {
         "tags": [
-          "Buzz/Comments"
+          "Buzz Comments"
         ],
         "operationId": "a1044c6dede12d228dba2d2315915245",
         "parameters": [
@@ -6371,7 +6390,7 @@
     "/api/v2/buzz/feed": {
       "get": {
         "tags": [
-          "Feed"
+          "Buzz Feed"
         ],
         "operationId": "c06a0bfc6e9d1c3c2ea059272c464cab",
         "parameters": [
@@ -20024,10 +20043,12 @@
       "Admin-EducationModel": {
         "properties": {
           "id": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Numerical ID of the education type"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the education type"
           }
         },
         "type": "object"
@@ -20389,13 +20410,16 @@
       "Admin-SkillModel": {
         "properties": {
           "id": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Numerical ID"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the skill"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Description of the skill"
           }
         },
         "type": "object"
@@ -25264,6 +25288,7 @@
     "parameters": {
       "sortOrder": {
         "name": "sortOrder",
+        "description": "Sort the collection in ascending or descending order",
         "in": "query",
         "required": false,
         "schema": {
@@ -25277,6 +25302,7 @@
       "limit": {
         "name": "limit",
         "in": "query",
+        "description": "Limit the number of items in the collection",
         "required": false,
         "schema": {
           "type": "integer",
@@ -25286,6 +25312,7 @@
       "offset": {
         "name": "offset",
         "in": "query",
+        "description": "Specify the starting point of the collection",
         "required": false,
         "schema": {
           "type": "integer",
@@ -25306,7 +25333,8 @@
                   "type": "array",
                   "items": {
                     "type": "integer"
-                  }
+                  },
+                  "description": "An array of IDs corresponding to the items which the user wishes to delete"
                 }
               },
               "type": "object"

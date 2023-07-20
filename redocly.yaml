@@ -1,0 +1,5 @@
+  theme: 
+    openapi:
+      theme:
+        logo: 
+          maxHeight: 100px
